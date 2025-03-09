@@ -42,28 +42,29 @@ TextEditingController pass=new TextEditingController();
 String msg='';
 
 Future<List> _login() async {
-  final response = await http.post(Uri.parse("http://10.0.2.2/my_store/login.php"), body: {
+  final response = await http.post(Uri.parse("http://192.166.10.177/my_store/login.php"), body: {
     "username": user.text,
     "password": pass.text,
   });
 
   var datauser = json.decode(response.body);
 
-  if(datauser.length==0){
+  if (!mounted) return []; // Check if the widget is still mounted
+
+  if (datauser.length == 0) {
     setState(() {
-          msg="Login Fail";
-        });
-  }else{
-    if(datauser[0]['nivel']=='super'){
-       Navigator.pushReplacementNamed(context, '/powerPage');
-    }else if(datauser[0]['nivel']=='bodega'){
+      msg = "Login Fail";
+    });
+  } else {
+    if (datauser[0]['nivel'] == 'super') {
+      Navigator.pushReplacementNamed(context, '/powerPage');
+    } else if (datauser[0]['nivel'] == 'bodega') {
       Navigator.pushReplacementNamed(context, '/bodegaPage');
     }
 
     setState(() {
-          username= datauser[0]['username'];
-        });
-
+      username = datauser[0]['username'];
+    });
   }
 
   return datauser;

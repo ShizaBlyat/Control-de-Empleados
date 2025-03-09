@@ -40,7 +40,9 @@ void confirm (){
       new ElevatedButton(
         child: new Text("CANCELAR",style: new TextStyle(color: Colors.black)),
         style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-        onPressed: ()=> Navigator.pop(context),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
     ],
   );
